@@ -31,7 +31,7 @@ class _BaseWorkbookWriter(object):
         stream object (such as an `io.BytesIO` instance) is expected as
         *xlsx_file*.
         """
-        workbook = Workbook(xlsx_file, {"in_memory": True})
+        workbook = Workbook(xlsx_file, {"in_memory": True, 'nan_inf_to_errors': True})
         worksheet = workbook.add_worksheet()
         yield workbook, worksheet
         workbook.close()
