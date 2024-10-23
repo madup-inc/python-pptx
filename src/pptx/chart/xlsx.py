@@ -172,7 +172,11 @@ class CategoryWorkbookWriter(_BaseWorkbookWriter):
             num_format = workbook.add_format({"num_format": series.number_format})
             series_col = idx + col_offset
             worksheet.write(0, series_col, series.name)
-            worksheet.write_column(1, series_col, series.values, num_format)
+            for row_idx, value in enumerate(series.values, start=1):
+                if isinstance(value, str):
+                    worksheet.write_formula(row_idx, series_col, '=#NUM!')
+                else:
+                    worksheet.write(row_idx, series_col, value, num_format)
 
 
 class XyWorkbookWriter(_BaseWorkbookWriter):
